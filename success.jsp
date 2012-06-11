@@ -14,6 +14,6 @@
         <title>Hello World</title>
     </head>
     <body>
-        <h1><s:property value="message" /></h1>
+        We are here
     </body>
 </html>

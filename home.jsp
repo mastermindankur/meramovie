@@ -9,8 +9,15 @@
       
       <body>  
       
-      <form name="myForm" action="">
-      <font size="7">CITY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name='cities' onchange="showState(this.value)" id="cities">  
+      <form name="myForm" action="Search.action">
+      <font size="7">CITY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name='city' onchange="showState(this.value)">  
+      <script>
+       this.value = city;
+       <%
+       String city2=request.getParameter("city");
+      %>
+      </script>
+      
        <option value="none">Select</option>  
     <%
  	Class.forName("com.mysql.jdbc.Driver").newInstance();  
@@ -46,7 +53,7 @@
       
       <br> 
       
-  MOVIE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name='movies' >  
+  MOVIE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name='movie' >  
   <option value="none">Select</option>  
     <%
  
@@ -81,7 +88,7 @@
       
       %>
       
-    DATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name='date' >  
+    DATE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <select name='day' >  
   <option value="none">Select</option>  
       <option value="Today"><%= today %></option>  
       <option value="Tomorrow"><%= tomorrow %></option>  

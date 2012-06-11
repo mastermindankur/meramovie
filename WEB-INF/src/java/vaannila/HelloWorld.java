@@ -5,10 +5,6 @@
 
 package vaannila;
 
-/**
- *
- * @author Meyyappan Muthuraman
- */
 
 public class HelloWorld {
 
