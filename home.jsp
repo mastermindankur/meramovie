@@ -92,7 +92,7 @@
   <option value="none">Select</option>  
       <option value="Today"><%= today %></option>  
       <option value="Tomorrow"><%= tomorrow %></option>  
-      <option value="Day After Tomorrow"><%= dayAfterTomorrow%></option>  
+      <option value="DayAfterTomorrow"><%= dayAfterTomorrow%></option>  
       </select> 
       
       
