@@ -23,13 +23,9 @@ HashMap h=new HashMap();
 <th>ShowTimings</th> 
 </tr>    
 <s:iterator value="results">
-<%
-String name = #tname;
-System.out.println("the value of theatre is " +name);
-if (h.containsKey(name))
-%>
 <th><s:property value="tname"/></th>
-<th><s:property value="showtiming"/></br></br>Rs <s:property value="price"/></th>
+<th>	<s:iterator value="timings">
+	<a href="url"><s:property value="showtiming"/></a>&nbsp(Rs<s:property value="price"/>)&nbsp&nbsp|  </s:iterator></th>
 </tr>
 
 </s:iterator>

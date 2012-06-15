@@ -4,6 +4,8 @@ package vaannila;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 
 
@@ -67,23 +69,49 @@ public class Search {
         
         ResultSet rs = stmt.executeQuery(query);
         
+        HashMap h =new HashMap();
 
+        SearchResult result=null;
+		ArrayList<SearchResult.inner> timings=null;
+		
         while (rs.next()) {
 
-            SearchResult result =new SearchResult();
-               
-                result.setMovie_id(rs.getInt("m.id"));
-                result.setTheatre_id(rs.getInt("t.id"));
-                result.setTname(rs.getString("t.name"));
-                result.setAudi(rs.getString("a.name"));
-                result.setMovieclass(rs.getString("c.name"));
-                result.setShowtiming(rs.getString("mrit.show_timing"));
-                result.setPrice(rs.getFloat("mrit.price"));
+        	if(h.containsKey(rs.getString("t.name"))==false)
+            	{
+        		h.put(rs.getString("t.name"),1);
+        		//adding previous results
+        		if(result !=null)
+        		{
+        		result.setTimings(timings);
                 //Adding every result row to results
                 results.add(result);
+        		}
+        		
+        		
+        		result =new SearchResult();
+            	timings = new ArrayList<SearchResult.inner>();
+            	
+            	result.setMovie_id(rs.getInt("m.id"));
+                result.setTheatre_id(rs.getInt("t.id"));
+                result.setTname(rs.getString("t.name"));
+            	
+            	SearchResult.inner i =result.new inner(rs.getString("a.name"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
+                timings.add(i); 
+            	}
+                
+            	if(h.containsKey(rs.getString("t.name"))==true)
+            	{
+            		SearchResult.inner i =result.new inner(rs.getString("a.name"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
+                    timings.add(i); 
+            	}
 
-        }
+            	
+        }//end of rs
         
+        result.setTimings(timings);
+        //Adding last result row to results
+        results.add(result);
+		
         
         }
         
