@@ -53,7 +53,7 @@ public class Search {
         Connection conn=d.createConnection();
         Statement stmt = conn.createStatement();
         // Create a query String
-        String query = "SELECT m.id,t.id,t.name,a.name,c.name,mrit.show_timing,mrit.price " +
+        String query = "SELECT DISTINCT m.id,t.id,t.name,a.name,c.name,mrit.show_timing,mrit.price " +
         		"FROM movie_runs_in_theatres mrit, movie m, theatre t, audi a,class c " +
         		" WHERE mrit.movie_id = m.id " +
         		" AND mrit.theatre_id = t.id " +
@@ -94,6 +94,8 @@ public class Search {
             	result.setMovie_id(rs.getInt("m.id"));
                 result.setTheatre_id(rs.getInt("t.id"));
                 result.setTname(rs.getString("t.name"));
+                result.setDate_string(df.format(oneDate));
+                
             	
             	SearchResult.inner i =result.new inner(rs.getString("a.name"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
                 timings.add(i); 
@@ -157,6 +159,15 @@ public class Search {
     
     public void setresults(ArrayList<SearchResult> results) {
         this.results = results;
+    }
+    
+    public Date getDate() {
+        return date;
+    }
+
+   
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     

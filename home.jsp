@@ -44,7 +44,7 @@
     
      System.out.println(city);
  	 stmt = con.createStatement();  
- 	 ResultSet movies = stmt.executeQuery("SELECT m.name FROM movie m, theatre t, movie_runs_in_theatres mrit WHERE m.id = mrit.movie_id AND mrit.theatre_id = t.id AND t.city ='"+ city +"'");
+ 	 ResultSet movies = stmt.executeQuery("SELECT DISTINCT m.name FROM movie m, theatre t, movie_runs_in_theatres mrit WHERE m.id = mrit.movie_id AND mrit.theatre_id = t.id AND t.city ='"+ city +"'");
  	%>
     }
     

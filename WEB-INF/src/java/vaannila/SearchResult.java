@@ -1,5 +1,6 @@
 package vaannila;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 
@@ -10,7 +11,9 @@ public class SearchResult {
 		private  int  movie_id;
 		private  int  theatre_id;
 		private String tname;
+		private String date_string;
 		
+		//inner class used in java
 		public class inner{
 		
 		private String audi;
@@ -20,7 +23,7 @@ public class SearchResult {
 		
 			inner(String audi,String movieclass, String showtiming, Float price)
 			{
-				this.audi=audi;
+			  this.audi=audi;
 			  this.movieclass=movieclass;
 			  this.showtiming=showtiming;
 			  this.price=price;
@@ -85,6 +88,15 @@ public class SearchResult {
 		public void setTheatre_id(int theatreId) {
 			theatre_id = theatreId;
 		}
+		  public String getDate_string() {
+		        return date_string;
+		    }
+
+		   
+		    public void setDate_string(String date_string) {
+		        this.date_string = date_string;
+		    }
+
 		
 
 }
