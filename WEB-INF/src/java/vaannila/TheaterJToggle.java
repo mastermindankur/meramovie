@@ -115,5 +115,5 @@ public class TheaterJToggle {
   		    };
 
                 TheaterJToggle theaterJToggle = new TheaterJToggle(input);
-            }        
-    }*/
+            }*/        
+    }

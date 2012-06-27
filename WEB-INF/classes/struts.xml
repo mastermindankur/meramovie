@@ -7,8 +7,19 @@
         <action name="Search" class="vaannila.Search">
             <result name="SUCCESS">/success.jsp</result>
         </action>
+
         <action name="HelloWorld" class="vaannila.HelloWorld">
             <result name="SUCCESS">/success.jsp</result>
         </action>
+        
+        <action name="SeatSelection" class="vaannila.SeatSelection">
+            <result name="SUCCESS">/seatMap.jsp</result>
+        </action>
+        
+          <action name="SeatBook" class="vaannila.SeatBook">
+            <result name="SUCCESS">/successBook.jsp</result>
+            <result name="FAILURE">/failureBook.jsp</result>
+        </action>
+
     </package>
 </struts>

@@ -25,7 +25,7 @@ HashMap h=new HashMap();
 <s:iterator value="results">
 <th><s:property value="tname"/></th>
 <th>	<s:iterator value="timings">
-	<a href="SeatSelection.action?city=<s:property value="city"/>&movie=<s:property value="movie_id"/>&day=<s:property value="date_string"/>&theatre=<s:property value="theatre_id"/>&class=<s:property value="movieclass"/>&time=<s:property value="showtiming"/>
+	<a href="SeatSelection.action?city=<s:property value="city"/>&movie_id=<s:property value="movie_id"/>&date=<s:property value="date_string"/>&theatre_id=<s:property value="theatre_id"/>&movieclass=<s:property value="movieclass"/>&showtiming=<s:property value="showtiming"/>
 	&audi=<s:property value="audi"/>"><s:property value="showtiming"/></a>&nbsp(Rs<s:property value="price"/>)<s:property value="movieclass"/>&nbsp&nbsp|  </s:iterator></th>
 </tr>
 

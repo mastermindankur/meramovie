@@ -7,13 +7,14 @@ import java.sql.Date;
 
 public class SeatSelection {
 	
-	   	private String city;
-	    private String movie_id;
-	    private String date;
-	    private String theatre_id;
-	    private String movieclass;
-	    private String showtiming;
-	    private String audi;
+	private String city;
+    private String movie_id;
+    private String date;
+    private String theatre_id;
+    private String movieclass;
+    private String showtiming;
+    private String audi;
+    private String seatsWanted;
 	    
 	    //input DB MATRIX 
 	    //get it from query from DB
@@ -29,8 +30,8 @@ public class SeatSelection {
 	    	
 	    	TheaterJToggle theaterJToggle = new TheaterJToggle(input);
 	    	
-	    createMap();
-	    	
+	    //	createMap();
+	    	return ("SUCCESS");
 	    	
 	    }
 

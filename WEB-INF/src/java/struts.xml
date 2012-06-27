@@ -13,7 +13,12 @@
         </action>
         
         <action name="SeatSelection" class="vaannila.SeatSelection">
-            <result name="SUCCESS">/success.jsp</result>
+            <result name="SUCCESS">/seatMap.jsp</result>
+        </action>
+        
+          <action name="SeatBook" class="vaannila.SeatBook">
+            <result name="SUCCESS">/successBook.jsp</result>
+            <result name="FAILURE">/failureBook.jsp</result>
         </action>
 
     </package>

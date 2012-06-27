@@ -16,12 +16,12 @@ public class SearchResult {
 		//inner class used in java
 		public class inner{
 		
-		private String audi;
+		private int audi;
 		private String movieclass;
 		private String showtiming;
 		private Float price;
 		
-			inner(String audi,String movieclass, String showtiming, Float price)
+			inner(int audi,String movieclass, String showtiming, Float price)
 			{
 			  this.audi=audi;
 			  this.movieclass=movieclass;
@@ -36,10 +36,10 @@ public class SearchResult {
 			public void setShowtiming(String showtiming) {
 				this.showtiming = showtiming;
 			}
-			public String getAudi() {
+			public int getAudi() {
 				return audi;
 			}
-			public void setAudi(String audi) {
+			public void setAudi(int audi) {
 				this.audi = audi;
 			}
 			public String getMovieclass() {

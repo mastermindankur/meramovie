@@ -53,7 +53,7 @@ public class Search {
         Connection conn=d.createConnection();
         Statement stmt = conn.createStatement();
         // Create a query String
-        String query = "SELECT DISTINCT m.id,t.id,t.name,a.name,c.name,mrit.show_timing,mrit.price " +
+        String query = "SELECT DISTINCT m.id,t.id,t.name,mrit.audi_id,c.name,mrit.show_timing,mrit.price " +
         		"FROM movie_runs_in_theatres mrit, movie m, theatre t, audi a,class c " +
         		" WHERE mrit.movie_id = m.id " +
         		" AND mrit.theatre_id = t.id " +
@@ -97,13 +97,13 @@ public class Search {
                 result.setDate_string(df.format(oneDate));
                 
             	
-            	SearchResult.inner i =result.new inner(rs.getString("a.name"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
+            	SearchResult.inner i =result.new inner(rs.getInt("mrit.audi_id"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
                 timings.add(i); 
             	}
                 
             	if(h.containsKey(rs.getString("t.name"))==true)
             	{
-            		SearchResult.inner i =result.new inner(rs.getString("a.name"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
+            		SearchResult.inner i =result.new inner(rs.getInt("mrit.audi_id"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
                     timings.add(i); 
             	}
 

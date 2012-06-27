@@ -10,7 +10,7 @@
       <body>  
       
       <form name="myForm" action="Search.action">
-      <font size="7">CITY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name='city' onchange="showState(this.value)">  
+      <font size="7">CITY&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   <select name="city" id="city" onchange="showState(this.value);">  
       <script>
        this.value = city;
        <%
@@ -18,7 +18,7 @@
       %>
       </script>
       
-       <option value="none">Select</option>  
+       <option value="none">Select City </option>  
     <%
  	Class.forName("com.mysql.jdbc.Driver").newInstance();  
  	Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mymovie","root","p@55word");  
@@ -30,6 +30,7 @@
       	<%
    		}
      %>
+            
       </select>  
       
             
@@ -38,6 +39,7 @@
     document.myForm.submit();
     alert(city);
     document.location.href ="home.jsp?city="+city; 
+    
     this.value = city;
         <%
      String city=request.getParameter("city");
