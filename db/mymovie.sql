@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 11, 2012 at 07:20 PM
+-- Generation Time: Jul 03, 2012 at 07:13 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.10
 
@@ -121,6 +121,51 @@ INSERT INTO `audience` (`id`, `name`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `booking`
+--
+
+CREATE TABLE IF NOT EXISTS `booking` (
+  `id` varchar(100) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `movie_runs_in_theatre_id` int(11) NOT NULL,
+  `booking_status_id` int(11) NOT NULL,
+  `payment_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_payment` (`payment_id`),
+  KEY `fk_booking_status` (`booking_status_id`),
+  KEY `fk_user` (`user_id`),
+  KEY `fk_movie_runs_in_theatre` (`movie_runs_in_theatre_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`id`, `user_id`, `movie_runs_in_theatre_id`, `booking_status_id`, `payment_id`) VALUES
+('1', 1, 1, 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `booking_status`
+--
+
+CREATE TABLE IF NOT EXISTS `booking_status` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `booking_status`
+--
+
+INSERT INTO `booking_status` (`id`, `name`) VALUES
+(1, 'booked success');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `class`
 --
 
@@ -204,6 +249,35 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `matrix`
+--
+
+CREATE TABLE IF NOT EXISTS `matrix` (
+  `id` int(11) NOT NULL,
+  `rowno` tinyint(11) NOT NULL,
+  `seatstatus` varchar(500) NOT NULL,
+  `price` varchar(500) NOT NULL,
+  `booking_id` varchar(1000) NOT NULL,
+  PRIMARY KEY (`id`,`rowno`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `matrix`
+--
+
+INSERT INTO `matrix` (`id`, `rowno`, `seatstatus`, `price`, `booking_id`) VALUES
+(1, 0, '0,0,0,0,0,0,0,0', '100,200,100,100,100,100,100,250', ''),
+(1, 1, '0,0,0,0,0,0,0,0', '100,200,100,100,100,100,100,250', ''),
+(1, 2, '0,1,2,3,0,0,0,0', '100,200,100,100,100,100,100,250', ''),
+(1, 3, '2,2,3,3,0,0,0,0', '100,200,100,100,100,100,100,250', ''),
+(1, 4, '0,0,0,0,0,0,0,0', '100,200,100,100,100,100,100,100', ''),
+(1, 5, '0,0,0,0,0,0,0,0', '50,50,50,50,50,50,50,50', ''),
+(1, 6, '0,0,0,0,0,0,0,0', '50,50,50,50,50,50,50,50', ''),
+(1, 7, '0,0,0,0,0,0,0,0', '10,10,10,10,10,10,10,10', '');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `movie`
 --
 
@@ -211,19 +285,27 @@ CREATE TABLE IF NOT EXISTS `movie` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
   `language` varchar(45) DEFAULT NULL,
-  `duration` tinyint(4) DEFAULT NULL,
+  `duration` varchar(10) DEFAULT NULL,
   `audience_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_movie_audience1` (`audience_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
 
 --
 -- Dumping data for table `movie`
 --
 
 INSERT INTO `movie` (`id`, `name`, `language`, `duration`, `audience_id`) VALUES
-(1, 'Shanghai', 'English', 2, 1),
-(2, 'Prometheus 3D', 'English', 3, 3);
+(1, 'Shanghai', 'English', '2.5', 1),
+(2, 'Prometheus 3D', 'English', '3', 3),
+(3, 'Marvels The Avengers', 'English', '2', 2),
+(4, 'Battleship', 'English', '2', 2),
+(5, 'Cosmopolis', 'English', '2', 3),
+(6, 'The Dictator', 'English', '2hr 11min', 1),
+(7, 'The Best Exotic Marigold Hotel', 'English', '2hr 22min', 2),
+(8, 'Piranha 3DD', 'English', '1hr 22min', 2),
+(9, 'The Hunger Games', 'English', '2hr 22min', 2),
+(10, 'Prometheus: An IMAX 3D Experience', 'English', '2hr 4min', 1);
 
 -- --------------------------------------------------------
 
@@ -287,53 +369,39 @@ INSERT INTO `movie_has_genre` (`movie_id`, `genre_id`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `movie_runs_in_theatres` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `movie_id` int(11) DEFAULT NULL,
   `theatre_id` int(11) DEFAULT NULL,
   `audi_id` int(11) DEFAULT NULL COMMENT '	',
   `class_id` int(11) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
-  `show_timings` varchar(200) DEFAULT NULL,
+  `show_timing` varchar(200) DEFAULT NULL,
+  `price` float NOT NULL,
+  `matrix_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `fk_movie1` (`movie_id`),
   KEY `fk_theatre1` (`theatre_id`),
   KEY `fk_audi1` (`audi_id`),
   KEY `fk_class1` (`class_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=13 ;
 
 --
 -- Dumping data for table `movie_runs_in_theatres`
 --
 
-INSERT INTO `movie_runs_in_theatres` (`movie_id`, `theatre_id`, `audi_id`, `class_id`, `date`, `show_timings`) VALUES
-(1, 5, 2, 2, '2012-06-08 14:48:25', '10:30am 1pm'),
-(1, 2, 2, 3, '2012-06-08 14:55:42', '11 am 12 pm 4 pm'),
-(2, 3, 5, 5, '2012-06-08 15:04:12', '7am 8am 9am 12 pm 5:30pm 8:pm');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order1`
---
-
-CREATE TABLE IF NOT EXISTS `order1` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `movie_id` int(11) DEFAULT NULL,
-  `theatre_id` int(11) DEFAULT NULL,
-  `date` date DEFAULT NULL,
-  `show_timings_id` int(11) DEFAULT NULL,
-  `order_status_id` int(11) DEFAULT NULL,
-  `payment_id` int(11) DEFAULT NULL,
-  `create_date` datetime DEFAULT NULL,
-  `order1_status_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`order1_status_id`),
-  KEY `fk_order1_order1_status1` (`order1_status_id`),
-  KEY `fk_order1_payment1` (`payment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `order1`
---
-
+INSERT INTO `movie_runs_in_theatres` (`id`, `movie_id`, `theatre_id`, `audi_id`, `class_id`, `date`, `show_timing`, `price`, `matrix_id`) VALUES
+(1, 1, 5, 2, 2, '2012-06-26 00:00:00', '8am ', 220, 1),
+(2, 1, 2, 2, 3, '2012-06-26 00:00:00', '2pm', 450, 1),
+(3, 2, 3, 5, 5, '2012-06-26 00:00:00', '3pm', 220, 1),
+(4, 1, 5, 2, 2, '2012-06-26 00:00:00', '10:30am', 320, 1),
+(5, 1, 5, 2, 3, '2012-06-26 00:00:00', '8am', 320, 1),
+(6, 1, 5, 2, 4, '2012-06-26 00:00:00', '8am', 150, 1),
+(7, 1, 5, 3, 2, '2012-06-26 00:00:00', '8am', 220, 1),
+(8, 1, 6, 4, 1, '2012-06-26 00:00:00', '8pm', 200, 1),
+(9, 1, 6, 5, 4, '2012-06-26 00:00:00', '11pm', 180, 1),
+(10, 3, 5, 1, 1, '2012-06-26 00:00:00', '9am', 200, 1),
+(11, 3, 5, 1, 2, '2012-06-26 00:00:00', '9 pm', 333, 1),
+(12, 3, 6, 6, 5, '2012-06-26 00:00:00', '7pm', 800, 1);
 
 -- --------------------------------------------------------
 
@@ -370,13 +438,12 @@ INSERT INTO `order1_status` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `payment` (
   `id` int(11) NOT NULL,
   `amount` float DEFAULT NULL,
-  `payment_status_id` int(11) DEFAULT NULL,
-  `order1_id` int(11) DEFAULT NULL,
+  `booking_id` int(11) DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
   `IP` varchar(45) DEFAULT NULL,
   `payment_mode_id` int(11) NOT NULL,
   `payment_status_id1` int(11) NOT NULL,
-  PRIMARY KEY (`id`,`payment_mode_id`,`payment_status_id1`),
+  PRIMARY KEY (`id`),
   KEY `fk_payment_payment_mode1` (`payment_mode_id`),
   KEY `fk_payment_payment_status1` (`payment_status_id1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -385,6 +452,8 @@ CREATE TABLE IF NOT EXISTS `payment` (
 -- Dumping data for table `payment`
 --
 
+INSERT INTO `payment` (`id`, `amount`, `booking_id`, `payment_date`, `IP`, `payment_mode_id`, `payment_status_id1`) VALUES
+(1, 200, 1, '2012-07-03 19:05:50', '192.168.1.111', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -571,23 +640,38 @@ CREATE TABLE IF NOT EXISTS `theatre` (
   `Address Line 2` varchar(45) DEFAULT NULL,
   `City` varchar(45) DEFAULT NULL,
   `State` varchar(45) DEFAULT NULL,
-  `Pincode` int(11) DEFAULT NULL,
+  `Pincode` varchar(7) DEFAULT NULL,
   `Phoneno` varchar(45) DEFAULT NULL,
   `rating` tinyint(4) DEFAULT NULL,
   `Ismultiplex` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `theatre`
 --
 
 INSERT INTO `theatre` (`id`, `Name`, `Address line 1`, `Address Line 2`, `City`, `State`, `Pincode`, `Phoneno`, `rating`, `Ismultiplex`) VALUES
-(1, 'Cinemax Pacific Mall: Subhash Nagar', 'Shubash Nagar', NULL, 'Delhi', 'Delhi', 110027, NULL, NULL, 1),
-(2, 'G3s Cinema: Rohini', 'Rohini', 'Rohini', 'Delhi', 'Delhi', 110034, NULL, NULL, 1),
-(3, 'Dt City Centre: Shalimar Bagh', 'Shalimar Bagh', 'Shalimar Bagh', 'Delhi', 'Delhi', 110034, NULL, NULL, 1),
+(1, 'Cinemax Pacific Mall: Subhash Nagar', 'Shubash Nagar', NULL, 'Delhi', 'Delhi', '110027', NULL, NULL, 1),
+(2, 'G3s Cinema: Rohini', 'Rohini', 'Rohini', 'Delhi', 'Delhi', '110034', NULL, NULL, 1),
+(3, 'Dt City Centre: Shalimar Bagh', 'Shalimar Bagh', 'Shalimar Bagh', 'Delhi', 'Delhi', '110034', NULL, NULL, 1),
 (4, 'Pvr Select Citywalk ', 'Primere', NULL, 'Delhi', 'Delhi', NULL, NULL, NULL, 1),
-(5, 'Pvr Gurgaon Mainstream', 'Gurgaon', NULL, 'Gurgaon', 'Haryana', NULL, NULL, NULL, 1);
+(5, 'Pvr Gurgaon Mainstream', 'Gurgaon', NULL, 'Gurgaon', 'Haryana', NULL, NULL, NULL, 1),
+(6, 'Scotiabank Theatre Toronto', '259 Richmond Street West', 'Toronto', 'Gurgaon', 'Haryana', '0', '416-368-5600', 3, 1),
+(7, 'TIFF Bell Lightbox', 'Reitman Square', '350 King Street West', 'Toronto', 'Ontario', 'M5B2L1', '416-599-8433', 3, 1),
+(8, 'Magic Lantern Theatres - Carlton Cinema', '20 Carlton Street at Yonge', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-494-9371', 2, 1),
+(9, 'AMC Yonge & Dundas 24', 'Suite 402, 10 Dundas Street East', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-335-5323', 2, 1),
+(10, 'CO Varsity and Varsity VIP', '55 Bloor Street West', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-961-6304', 2, 1),
+(11, 'Rainbow Cinemas Market Square', '80 Front Street E. at Jarvis', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-494-9371', 2, 1),
+(12, 'Royal Cinema', '608 College St. West', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-534-5252', 2, 1),
+(13, 'Canada Square', 'Concourse Level', '2190 Yonge Street', 'Toronto', 'Ontario', 'M5B2L1', '416-646-0444', 2, 1),
+(14, 'Regent Theatre', '551 Mount Pleasant Road', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-480-9884', 2, 1),
+(15, 'Bloor Hot Docs Cinema', '506 Bloor Street West', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-637-3123', 4, 2),
+(16, 'Mt. Pleasant Theatre', '675 Mt. Pleasant Road', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-489-8484', 3, 1),
+(17, 'Cineplex Entertainment SilverCity - Yonge-Egl', '2300 Yonge Street', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-544-1236', 3, 1),
+(18, 'Revue Cinema', '400 Roncesvalles Avenue', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-531-9959', 4, 2),
+(19, 'The Projection Booth', '1035 Gerrard Steet East', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-466-3636', 3, 1),
+(20, 'The Beach Cinemas - Alliance Cinemas', '1651 Queen Street East', 'Toronto', 'Toronto', 'Ontario', 'M5B2L1', '416-699-1327', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -735,13 +819,6 @@ ALTER TABLE `movie_runs_in_theatres`
   ADD CONSTRAINT `fk_class1` FOREIGN KEY (`class_id`) REFERENCES `class` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_movie1` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_theatre1` FOREIGN KEY (`theatre_id`) REFERENCES `theatre` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `order1`
---
-ALTER TABLE `order1`
-  ADD CONSTRAINT `fk_order1_order1_status1` FOREIGN KEY (`order1_status_id`) REFERENCES `order1_status` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_order1_payment1` FOREIGN KEY (`payment_id`) REFERENCES `payment` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `payment`
