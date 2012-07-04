@@ -5,14 +5,16 @@ public class Seat {
 	int y;
 	float price;
 	int status;
+	int bookingid;
 	
 	//constructor
-	Seat(int x,int y,float price, int status)
+	Seat(int x,int y,float price, int status,int bid)
 	{
 		this.x=x;
 		this.y=y;
 		this.price=price;
 		this.status=status;
+		this.bookingid=bid;
 	}
 	
 	
@@ -39,6 +41,13 @@ public class Seat {
 	}
 	public void setStatus(int status) {
 		this.status = status;
+	}
+	
+	public int getbookingid() {
+		return bookingid;
+	}
+	public void setbookingid(int bookingid) {
+		this.bookingid = bookingid;
 	}
 
 }
