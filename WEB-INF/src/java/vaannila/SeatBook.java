@@ -76,10 +76,9 @@ public class SeatBook {
     			float pricef=Float.parseFloat(price);
     			
     			String bid = bt.nextToken();
-    			int bidi=Integer.parseInt(bid);
   
 
-    			s[rowno][columnno]=new Seat(rowno,columnno,pricef,statusi,bidi);
+    			s[rowno][columnno]=new Seat(rowno,columnno,pricef,statusi,bid);
     			System.out.println("Setting rowno , price and status as "+rowno+"-"+columnno+"-"+pricef+"-"+status+"-"+bid);
     			
     			columnno++;
@@ -89,7 +88,7 @@ public class SeatBook {
     }
     
     
-    public void updateSeatMatrixInDB(int matrix_id,Seat s[][],StringTokenizer point,int bookingid) throws Exception
+    public void updateSeatMatrixInDB(int matrix_id,Seat s[][],StringTokenizer point,String bookingid) throws Exception
     {    	
     	while(point.hasMoreTokens())
     	{
@@ -106,23 +105,23 @@ public class SeatBook {
     	
     	System.out.println("PRINTING ");
     	for (int x=0; x<s.length; x++) {
-    			String status="";
-    			String booking_id="";
+    			String statuses="";
+    			String bookingids="";
     			
     	       for (int y=0; y<s[x].length; y++) {
-    	          status=status+s[x][y].getStatus()+",";
-    	          booking_id=booking_id+s[x][y].getbookingid()+",";
+    	          statuses=statuses+s[x][y].getStatus()+",";
+    	          bookingids=bookingids+s[x][y].getbookingid()+",";
     	       	}
-    	       status=status.substring(0, status.length()-1);
-    	       booking_id=booking_id.substring(0, booking_id.length()-1);
+    	       statuses=statuses.substring(0, statuses.length()-1);
+    	       bookingids=bookingids.substring(0, bookingids.length()-1);
     	      
-    	      System.out.println("status"+status);
- 	          System.out.println("booking_id"+booking_id);
+    	      System.out.println("status"+statuses);
+ 	          System.out.println("booking_id"+bookingids);
     	      System.out.println(">>>>");
     	      
     	      //INSERT INTO DB
     	      String sql = "UPDATE matrix " +
-              "SET seatstatus ='"+status+"',booking_id='"+booking_id+"' where id="+matrix_id+" and rowno="+x;
+              "SET seatstatus ='"+statuses+"',booking_id='"+bookingids+"' where id="+matrix_id+" and rowno="+x;
     	      
     	      System.out.println("update query is "+sql);
     	      
@@ -134,14 +133,31 @@ public class SeatBook {
     }
     
 
-    public void createBookingId()
+    public String createBookingId (int mritid,int movieid,int theatreid ) throws Exception
     {
     	
+    	String query = "SELECT max(id) from counter";
+    	ResultSet rs = stmt.executeQuery(query);
+        rs.next();
+        
+        int count=rs.getInt("max(id)");
+    	//INCREMENTING COUNT BY 1
+        int newcount=count+1;
+    	
+    	String sql = "UPDATE counter " +
+        "SET id ="+newcount;
+    	stmt.executeUpdate(sql);
+    	
+    	return mritid+"M"+movieid+"T"+theatreid+"B"+newcount;
     }
     
     
-    public void insertBookingTable(int user_id,int movie_runs_in_theatre_id,int booking_status_id,int payment_id)
+    public void insertBookingTable(String bookingid,int user_id,int movie_runs_in_theatre_id,int booking_status_id,int payment_id) throws java.sql.SQLException
     {
+    	
+    	String sql="INSERT INTO booking "+"VALUES ('"+bookingid+"',"+user_id+","+movie_runs_in_theatre_id+","+booking_status_id+","+payment_id+")";
+    	System.out.println(sql);
+    	stmt.executeUpdate(sql);	
     	
     }
     
@@ -157,7 +173,7 @@ public class SeatBook {
     // Create a query String
     //FINDING MATRIX ID FOR THE INPUT FROM USER
     	
-    String query = "SELECT id,mrit.matrix_id " +
+    String query = "SELECT id,mrit.matrix_id,movie_id,theatre_id " +
     		"FROM movie_runs_in_theatres mrit " +
     		" WHERE mrit.movie_id="+getMovie_id()+
     		" AND mrit.theatre_id="+getTheatre_id()+
@@ -171,6 +187,10 @@ public class SeatBook {
     rs.next();
     
     int matrix_id=rs.getInt("mrit.matrix_id");
+   
+    int mritid=rs.getInt("id");
+    int movieid=rs.getInt("movie_id");
+    int theatreid=rs.getInt("theatre_id");	
     
     Seat s[][]=createSeatMatrixFromDB(matrix_id);
 
@@ -194,8 +214,6 @@ public class SeatBook {
     			{
     				System.out.println("We can book the seat which is available"+x+"~~~~"+y+"which has a price "+s[x][y].getPrice());
     				priceofticket=priceofticket+s[x][y].getPrice();
-    		
-    				
     			}
     			else
     			{
@@ -214,10 +232,16 @@ public class SeatBook {
 		{
 			System.out.println("the booking has been done successfully , updating matrix table");
 			
+			String bookingid=createBookingId(mritid,movieid,theatreid);
+			
 			// UPDATING SEAT MATRIX
-			updateSeatMatrixInDB(matrix_id,s,point,99);	
+			updateSeatMatrixInDB(matrix_id,s,point,bookingid);	
+			
+			//INSERTING INTO BOOKING TABLE
+			//#########instead of setting payment id we will generate a payment id
+			pg.setPayment_id(1);
+			insertBookingTable(bookingid,1, mritid,1,pg.getPayment_id());
 
-			//nsertBookingTable('',1,rs.getInt("id"),1,pg.getPayment_id());
 			
 		}
     	
@@ -227,6 +251,11 @@ public class SeatBook {
 
     return("SUCCESS");
     }
+    
+    
+ 
+    
+    
     
     
     

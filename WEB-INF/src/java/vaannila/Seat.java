@@ -5,10 +5,10 @@ public class Seat {
 	int y;
 	float price;
 	int status;
-	int bookingid;
+	String bookingid;
 	
 	//constructor
-	Seat(int x,int y,float price, int status,int bid)
+	Seat(int x,int y,float price, int status,String bid)
 	{
 		this.x=x;
 		this.y=y;
@@ -43,10 +43,10 @@ public class Seat {
 		this.status = status;
 	}
 	
-	public int getbookingid() {
+	public String getbookingid() {
 		return bookingid;
 	}
-	public void setbookingid(int bookingid) {
+	public void setbookingid(String bookingid) {
 		this.bookingid = bookingid;
 	}
 
