@@ -136,16 +136,16 @@ public class SeatBook {
     public String createBookingId (int mritid,int movieid,int theatreid ) throws Exception
     {
     	
-    	String query = "SELECT max(id) from counter";
+    	String query = "SELECT max(bookingcounter) from counter";
     	ResultSet rs = stmt.executeQuery(query);
         rs.next();
         
-        int count=rs.getInt("max(id)");
+        int count=rs.getInt("max(bookingcounter)");
     	//INCREMENTING COUNT BY 1
         int newcount=count+1;
     	
     	String sql = "UPDATE counter " +
-        "SET id ="+newcount;
+        "SET bookingcounter ="+newcount;
     	stmt.executeUpdate(sql);
     	
     	return mritid+"M"+movieid+"T"+theatreid+"B"+newcount;
@@ -239,8 +239,12 @@ public class SeatBook {
 			
 			//INSERTING INTO BOOKING TABLE
 			//#########instead of setting payment id we will generate a payment id
-			pg.setPayment_id(1);
+			pg.setPayment_id(pg.createPaymentId());
 			insertBookingTable(bookingid,1, mritid,1,pg.getPayment_id());
+			
+			//INSERTION INTO PAYMENT TABLE
+			pg.insert2Payment(pg.getPayment_id(),bookingid,priceofticket,8,0,"127.0.0.1");
+			//#############8 and 0 are for TEST paymentmode and paymentstatus respectively
 
 			
 		}

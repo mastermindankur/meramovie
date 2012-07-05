@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 04, 2012 at 11:12 AM
+-- Generation Time: Jul 04, 2012 at 09:02 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.2-1ubuntu4.10
 
@@ -144,7 +144,15 @@ CREATE TABLE IF NOT EXISTS `booking` (
 INSERT INTO `booking` (`id`, `user_id`, `movie_runs_in_theatre_id`, `booking_status_id`, `payment_id`) VALUES
 ('1', 1, 1, 1, 1),
 ('1M1T5B6', 1, 1, 1, 25),
-('1M1T5B7', 1, 1, 1, 1);
+('1M1T5B7', 1, 1, 1, 1),
+('1M1T5B8', 1, 1, 1, 8),
+('1M1T5B9', 1, 1, 1, 9),
+('1M1T5B10', 1, 1, 1, 10),
+('1M1T5B11', 1, 1, 1, 11),
+('1M1T5B12', 1, 1, 1, 12),
+('1M1T5B13', 1, 1, 1, 13),
+('1M1T5B14', 1, 1, 1, 14),
+('12M3T6B15', 1, 12, 1, 15);
 
 -- --------------------------------------------------------
 
@@ -195,15 +203,16 @@ INSERT INTO `class` (`id`, `name`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `counter` (
-  `id` int(11) NOT NULL
+  `bookingcounter` int(11) NOT NULL,
+  `paymentcounter` int(11) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `counter`
 --
 
-INSERT INTO `counter` (`id`) VALUES
-(7);
+INSERT INTO `counter` (`bookingcounter`, `paymentcounter`) VALUES
+(15, 15);
 
 -- --------------------------------------------------------
 
@@ -289,10 +298,12 @@ INSERT INTO `matrix` (`id`, `rowno`, `seatstatus`, `price`, `booking_id`) VALUES
 (1, 1, '1,1,1,0,0,0,0,0', '100,200,100,100,100,100,100,250', '99,99,99,-1,-1,-1,-1,-1'),
 (1, 2, '1,0,0,0,0,0,0,0', '100,200,100,100,100,100,100,250', '2M1T2B2,-1,-1,-1,-1,-1,-1,-1'),
 (1, 3, '1,1,1,1,1,1,1,0', '100,200,100,100,100,100,100,250', '1M1T5B3,1M1T5B4,1M1T5B4,1M1T5B4,1M1T5B5,1M1T5B5,1M1T5B5,-1'),
-(1, 4, '1,0,0,0,0,0,0,1', '100,200,100,100,100,100,100,100', '1M1T5B6,-1,-1,-1,-1,-1,-1,1M1T5B7'),
-(1, 5, '0,0,0,0,0,0,0,0', '50,50,50,50,50,50,50,50', '-1,-1,-1,-1,-1,-1,-1,-1'),
+(1, 4, '1,0,1,1,1,1,1,1', '100,200,100,100,100,100,100,100', '1M1T5B6,-1,1M1T5B12,1M1T5B11,1M1T5B10,1M1T5B9,1M1T5B8,1M1T5B7'),
+(1, 5, '1,1,0,0,0,0,0,0', '50,50,50,50,50,50,50,50', '1M1T5B13,1M1T5B14,-1,-1,-1,-1,-1,-1'),
 (1, 6, '0,0,0,0,0,0,0,0', '50,50,50,50,50,50,50,50', '-1,-1,-1,-1,-1,-1,-1,-1'),
-(1, 7, '0,0,0,0,0,0,0,0', '10,10,10,10,10,10,10,10', '-1,-1,-1,-1,-1,-1,-1,-1');
+(1, 7, '0,0,0,0,0,0,0,0', '10,10,10,10,10,10,10,10', '-1,-1,-1,-1,-1,-1,-1,-1'),
+(2, 0, '1,1,1,1', '100,200,100,100', '12M3T6B15,12M3T6B15,12M3T6B15,12M3T6B15'),
+(2, 1, '0,0,0,0', '100,100,100,100', '-1,-1,-1,-1');
 
 -- --------------------------------------------------------
 
@@ -420,7 +431,7 @@ INSERT INTO `movie_runs_in_theatres` (`id`, `movie_id`, `theatre_id`, `audi_id`,
 (9, 1, 6, 5, 4, '2012-07-04 00:00:00', '11pm', 180, 1),
 (10, 3, 5, 1, 1, '2012-07-04 00:00:00', '9am', 200, 1),
 (11, 3, 5, 1, 2, '2012-07-04 00:00:00', '9 pm', 333, 1),
-(12, 3, 6, 6, 5, '2012-07-04 00:00:00', '7pm', 800, 1);
+(12, 3, 6, 6, 5, '2012-07-04 00:00:00', '7pm', 800, 2);
 
 -- --------------------------------------------------------
 
@@ -457,7 +468,7 @@ INSERT INTO `order1_status` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `payment` (
   `id` int(11) NOT NULL,
   `amount` float DEFAULT NULL,
-  `booking_id` int(11) DEFAULT NULL,
+  `booking_id` varchar(100) DEFAULT NULL,
   `payment_date` datetime DEFAULT NULL,
   `IP` varchar(45) DEFAULT NULL,
   `payment_mode_id` int(11) NOT NULL,
@@ -472,7 +483,10 @@ CREATE TABLE IF NOT EXISTS `payment` (
 --
 
 INSERT INTO `payment` (`id`, `amount`, `booking_id`, `payment_date`, `IP`, `payment_mode_id`, `payment_status_id1`) VALUES
-(1, 200, 1, '2012-07-03 19:05:50', '192.168.1.111', 1, 1);
+(1, 200, '1', '2012-07-03 19:05:50', '192.168.1.111', 1, 1),
+(11, 100, '1M1T5B11', '0000-00-00 00:00:00', '127.0.0.1', 8, 0),
+(14, 50, '1M1T5B14', '2012-07-04 12:15:24', '127.0.0.1', 8, 0),
+(15, 500, '12M3T6B15', '2012-07-04 12:26:41', '127.0.0.1', 8, 0);
 
 -- --------------------------------------------------------
 
@@ -497,7 +511,8 @@ INSERT INTO `payment_mode` (`id`, `name`) VALUES
 (4, 'Counter Cash'),
 (5, 'Tech Process'),
 (6, 'CC Avenue'),
-(7, 'Citrus');
+(7, 'Citrus'),
+(8, 'TEST');
 
 -- --------------------------------------------------------
 
@@ -516,6 +531,7 @@ CREATE TABLE IF NOT EXISTS `payment_status` (
 --
 
 INSERT INTO `payment_status` (`id`, `name`) VALUES
+(0, 'TEST'),
 (1, 'Requested'),
 (2, 'Authorization Pending'),
 (3, 'Success'),
