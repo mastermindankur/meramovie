@@ -79,6 +79,7 @@ public class Search {
         	if(h.containsKey(rs.getString("t.name"))==false)
             	{
         		h.put(rs.getString("t.name"),1);
+        		
         		//adding previous results
         		if(result !=null)
         		{
@@ -101,7 +102,8 @@ public class Search {
                 timings.add(i); 
             	}
                 
-            	if(h.containsKey(rs.getString("t.name"))==true)
+            	//if(h.containsKey(rs.getString("t.name"))==true)
+        	else
             	{
             		SearchResult.inner i =result.new inner(rs.getInt("mrit.audi_id"),rs.getString("c.name"),rs.getString("mrit.show_timing"),rs.getFloat("mrit.price"));
                     timings.add(i); 
