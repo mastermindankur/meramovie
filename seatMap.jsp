@@ -7,78 +7,10 @@
 <title>Search</title>
 <head>
 
-
+<link href="style.css" rel="stylesheet">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>
- <style type="text/css">
-    #holder{    
-     
-     border:1px solid #A4A4A4;
-     margin-left:10px; 
-    padding:10px;
-     background-color:#DEF3CA;
-    -moz-border-radius:5px;
-    -webkit-border-radius:5px;
-    
-    border-radius:5px;
-    border-radius:5px; 
-    }
-     #place {
-     position: relative;
-     margin:7px;
-     
-     }
-     #place a{
-     font-size:0.6em;
-
-     }
-     #place li
-     {
-         list-style: none outside none;
-         position: absolute;   
-     }    
-    
-     #place .seat{
-     background:url("./pictures/available.gif") no-repeat scroll 0 0 transparent;
-     height:50px;
-     width:50px;
-     display:block;  
-     }
-      #place .selectedSeat
-      { 
-        background-image:url("./pictures/booked.gif");          
-      }
-       #place .selectingSeat
-      { 
-        background-image:url("./pictures/selected.gif");        
-      }
-      #place .unavilableSeat
-      {
-        background-image:url("./pictures/unavailable.gif"); 
-      }
-      #place .row-3, #place .row-4{
-        margin-top:10px;
-      }
-     #seatDescription{
-     padding:0px;
-     }
-      #seatDescription li{
-      verticle-align:middle;      
-      list-style: none outside none;
-       padding-left:35px;
-      height:35px;
-      float:left;
-      }
- #order_place{
-  position: relative;
-  
- }
- .sitting{
-  position: relative;
-  color:#777;
-  display: inline-block;
- }
-    </style>
+ 
 <body>
 	<div id="holder"> 
         <ul  id="place">
