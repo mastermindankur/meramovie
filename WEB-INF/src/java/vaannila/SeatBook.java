@@ -251,7 +251,7 @@ public class SeatBook {
     	
     	
     	
-    	System.out.println("The price of the ticket is "+priceofticket);
+    	System.out.println("The price of the ticket is..... "+priceofticket);
 
     return("SUCCESS");
     }

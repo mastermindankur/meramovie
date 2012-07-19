@@ -12,16 +12,21 @@
 </head>
  <style type="text/css">
     #holder{    
-     height:200px;   
-     width:550px;
-     background-color:#F5F5F5;
+     
      border:1px solid #A4A4A4;
      margin-left:10px; 
-      
+    padding:10px;
+     background-color:#DEF3CA;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    
+    border-radius:5px;
+    border-radius:5px; 
     }
      #place {
      position: relative;
      margin:7px;
+     
      }
      #place a{
      font-size:0.6em;
@@ -35,8 +40,8 @@
     
      #place .seat{
      background:url("./pictures/available.gif") no-repeat scroll 0 0 transparent;
-     height:33px;
-     width:33px;
+     height:50px;
+     width:50px;
      display:block;  
      }
       #place .selectedSeat
@@ -90,8 +95,8 @@
             
                 rowCssPrefix: 'row-',
                 colCssPrefix: 'col-',
-                seatWidth: 35,
-                seatHeight: 35,
+                seatWidth: 50,
+                seatHeight: 50,
                 seatCss: 'seat',
                 selectedSeatCss: 'selectedSeat',
                 selectingSeatCss: 'selectingSeat',
@@ -99,9 +104,11 @@
             };
 
             var init = function (Seat) {
+           
                 var str = [], seatNo, className;
                 var rows= Seat.length;
                 var cols= Seat[0].length;
+                
                 for (i = 0; i <rows; i++) {
                     for (j = 0; j <cols; j++) {
                         seatNo = (i + j *rows + 1);
@@ -123,6 +130,7 @@
                        
                     }
                 }
+                $('#holder').css({height:rows*settings.seatHeight+'px',width:cols*settings.seatWidth+'px'});
                 $('#place').html(str.join(''));
             };
 
@@ -130,15 +138,11 @@
             //init();
 
             //Case II: If already booked
-            
-            var Seats =[ [ 0, 0, 0, 0, 0, 0],
-                         [0, 0, 0, 0 ,0 , 0],
-                         [ 2, 2, 2, 2 ,2, 0],
-                         [ 3, 3, 3, 3 ,3, 0],
-                      ];
+           
+            var Seats =[[<s:property value="input"/>]];
                       
             init(Seats);
-
+            
             var clickNum=0;
             $('.' + settings.seatCss).on('click',function () {
               
