@@ -32,6 +32,7 @@
 
     <target name="clean">
         <delete dir="${build.dir}" includeEmptyDirs="true" />
+    	<copy file="WEB-INF/src/java/struts.xml" tofile="WEB-INF/classes/struts.xml" />
     </target>
 
     <target name="prep">

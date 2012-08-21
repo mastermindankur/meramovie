@@ -27,12 +27,13 @@ HashMap h=new HashMap();
 <thead>
 <tbody>    
 <s:iterator value="results">
+<tr>
 <th scope="row"><s:property value="tname"/></th>
-<tr><th><s:iterator value="timings">
+<td><s:iterator value="timings">
 	<a href="SeatSelection.action?city=<s:property value="city"/>&movie_id=<s:property value="movie_id"/>&date=<s:property value="date_string"/>&theatre_id=<s:property value="theatre_id"/>&movieclass=<s:property value="movieclass"/>&showtiming=<s:property value="showtiming"/>
-	&audi=<s:property value="audi"/>"><s:property value="showtiming"/></a>&nbsp(Rs<s:property value="price"/>)<s:property value="movieclass"/>&nbsp&nbsp|  </s:iterator></th>
+	&audi=<s:property value="audi"/>"><s:property value="showtiming"/></a>&nbsp(Rs<s:property value="price"/>)<s:property value="movieclass"/>&nbsp&nbsp|  </s:iterator>
+</td>
 </tr>
-
 </s:iterator>
 </tbody>
 
