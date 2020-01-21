@@ -10,6 +10,8 @@ public class Theatre {
 	private int rating;
 	boolean ismultiplex;
 	
+	//comment
+	
 	public String getName() {
 		return name;
 	}
